@@ -1,3 +1,9 @@
+//para passar como parâmetro nas chamadas às funções
+$urls = new Array();
+$urls['production'] = 'http://ava.brazcubas.br/';
+$urls['tester'] = 'http://54.207.51.47/BETA/';
+
+
 function populateGabaritoDanteWithCSV($csvFile,$courseNameColumn,$dataColumn,$semesterColumn,$initFirstTemplate){
   $questionValue=1;
   $gabaritoCSV =_readCSVFile($csvFile,';',true);
@@ -57,12 +63,12 @@ $questionValue =1;
 }
 }
 
-function sendMessagePerStudent($arrayEmails,$defaultMessage)
+function sendMessagePerStudent($arrayEmails,$defaultMessage,$str_url)
 {
   $emails = $arrayEmails;
 
   for ($i = 0; $i < $emails.length; $i++) {
-   _navigateTo('http://ava.brazcubas.br/user/index.php?id=1&search='+encodeURIComponent($emails[$i]));
+   _navigateTo($urls[$str_url]+'user/index.php?id=1&search='+encodeURIComponent($emails[$i]));
    if(_count('_cell',"/.*/",_in(_table(1))) >1)
    {
     _click(_checkbox('usercheckbox',_in(_cell('user-index-participants-1_r0_c0', _in(_row(2))))));
@@ -79,7 +85,7 @@ function sendMessagePerStudent($arrayEmails,$defaultMessage)
 }
 }
 
-function setShowTopicUnit($objectListCourses,$sesskey,$topic)
+function setShowTopicUnit($objectListCourses,$sesskey,$topic,$str_url)
 {
     if(_exists(_submit("Ativar edição")))
     {
@@ -88,7 +94,7 @@ function setShowTopicUnit($objectListCourses,$sesskey,$topic)
     _wait(1000);
   for ($i = 0; $i < $objectListCourses.length; $i++)
   {
-    _navigateTo('http://ava.brazcubas.br/course/view.php?id='+$objectListCourses[$i].ava+'&sesskey='+$sesskey+'&show='+$topic);
+    _navigateTo($urls[$str_url]+'course/view.php?id='+$objectListCourses[$i].ava+'&sesskey='+$sesskey+'&show='+$topic);
     _wait(2500);
   }
 }
