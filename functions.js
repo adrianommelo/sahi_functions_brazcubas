@@ -133,17 +133,20 @@ $disciplinasID = new Array({ava:1457}, {ava:1483}, {ava:1309}, {ava:1499}, {ava:
 
 //chamando a Função de acesso aos AVAs da array
 //'ava' seria o nome da propriedade utilizada em seu array
-acessaAVA($disciplinasID,'ava');
 
-function acessaAVA($id_AVAS, $nomepropriedade)
+//$str_url= 'production' or 'tester'
+
+acessaAVA($disciplinasID,'ava','tester');
+
+function acessaAVA($id_AVAS, $nomepropriedade, $str_url)
 {
   //$url = "http://ava.brazcubas.br/course/view.php?id=";
-  $url = "http://54.207.51.47/BETA/course/view.php?id=";
+  //$url = "http://54.207.51.47/BETA/course/view.php?id=";
   for(var $posicao in $id_AVAS)
   {
     //verificação se dentre o indice da propriedade ava não é string, se não for
     //ele pega e concatena na url do ava que queremos acessar
-    _navigateTo($url+$id_AVAS[$posicao][$nomepropriedade]);
+    _navigateTo($urls[$str_url]+'course/view.php?id='+$id_AVAS[$posicao][$nomepropriedade]);
 
     _wait(5000);
     //chama função que desabilita Revisão <<<<<<~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
