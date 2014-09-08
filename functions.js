@@ -86,9 +86,9 @@ function setShowTopicUnit($objectListCourses,$sesskey,$topic)
      _click(_submit("Ativar edição"));
     }
     _wait(1000);
-  for ($i = 0; $i < $arrayListCourses.length; $i++)
+  for ($i = 0; $i < $objectListCourses.length; $i++)
   {
-    _navigateTo('http://ava.brazcubas.br/course/view.php?id='+$arrayListCourses[$i].ava+'&sesskey='+$sesskey+'&show='+$count);
+    _navigateTo('http://ava.brazcubas.br/course/view.php?id='+$objectListCourses[$i].ava+'&sesskey='+$sesskey+'&show='+$count);
     _wait(2500);
   }
 }
