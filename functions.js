@@ -1,3 +1,9 @@
+//para passar como parâmetro nas chamadas às funções
+$urls = new Array();
+$urls['production'] = 'http://ava.brazcubas.br/';
+$urls['tester'] = 'http://54.207.51.47/BETA/';
+
+
 function populateGabaritoDanteWithCSV($csvFile,$courseNameColumn,$dataColumn,$semesterColumn,$initFirstTemplate){
   $questionValue=1;
   $gabaritoCSV =_readCSVFile($csvFile,';',true);
@@ -57,12 +63,12 @@ $questionValue =1;
 }
 }
 
-function sendMessagePerStudent($arrayEmails,$defaultMessage)
+function sendMessagePerStudent($arrayEmails,$defaultMessage,$str_url)
 {
   $emails = $arrayEmails;
 
   for ($i = 0; $i < $emails.length; $i++) {
-   _navigateTo('http://ava.brazcubas.br/user/index.php?id=1&search='+encodeURIComponent($emails[$i]));
+   _navigateTo($urls[$str_url]+'user/index.php?id=1&search='+encodeURIComponent($emails[$i]));
    if(_count('_cell',"/.*/",_in(_table(1))) >1)
    {
     _click(_checkbox('usercheckbox',_in(_cell('user-index-participants-1_r0_c0', _in(_row(2))))));
@@ -79,11 +85,16 @@ function sendMessagePerStudent($arrayEmails,$defaultMessage)
 }
 }
 
-function setShowTopicUnit($objectListCourses,$sesskey,$topic)
+function setShowTopicUnit($objectListCourses,$sesskey,$topic,$str_url)
 {
-  for ($i = 0; $i < $arrayListCourses.length; $i++)
+    if(_exists(_submit("Ativar edição")))
+    {
+     _click(_submit("Ativar edição"));
+    }
+    _wait(1000);
+  for ($i = 0; $i < $objectListCourses.length; $i++)
   {
-    _navigateTo('http://ava.brazcubas.br/course/view.php?id='+$arrayListCourses[$i].ava+'&sesskey='+$sesskey+'&show='+$count);
+    _navigateTo($urls[$str_url]+'course/view.php?id='+$objectListCourses[$i].ava+'&sesskey='+$sesskey+'&show='+$topic);
     _wait(2500);
   }
 }
@@ -122,17 +133,20 @@ $disciplinasID = new Array({ava:1457}, {ava:1483}, {ava:1309}, {ava:1499}, {ava:
 
 //chamando a Função de acesso aos AVAs da array
 //'ava' seria o nome da propriedade utilizada em seu array
-acessaAVA($disciplinasID,'ava');
 
-function acessaAVA($id_AVAS, $nomepropriedade)
+//$str_url= 'production' or 'tester'
+
+acessaAVA($disciplinasID,'ava','tester');
+
+function acessaAVA($id_AVAS, $nomepropriedade, $str_url)
 {
   //$url = "http://ava.brazcubas.br/course/view.php?id=";
-  $url = "http://54.207.51.47/BETA/course/view.php?id=";
+  //$url = "http://54.207.51.47/BETA/course/view.php?id=";
   for(var $posicao in $id_AVAS)
   {
     //verificação se dentre o indice da propriedade ava não é string, se não for
     //ele pega e concatena na url do ava que queremos acessar
-    _navigateTo($url+$id_AVAS[$posicao][$nomepropriedade]);
+    _navigateTo($urls[$str_url]+'course/view.php?id='+$id_AVAS[$posicao][$nomepropriedade]);
 
     _wait(5000);
     //chama função que desabilita Revisão <<<<<<~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
