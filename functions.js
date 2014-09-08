@@ -81,6 +81,11 @@ function sendMessagePerStudent($arrayEmails,$defaultMessage)
 
 function setShowTopicUnit($objectListCourses,$sesskey,$topic)
 {
+    if(_exists(_submit("Ativar edição")))
+    {
+     _click(_submit("Ativar edição"));
+    }
+    _wait(1000);
   for ($i = 0; $i < $arrayListCourses.length; $i++)
   {
     _navigateTo('http://ava.brazcubas.br/course/view.php?id='+$arrayListCourses[$i].ava+'&sesskey='+$sesskey+'&show='+$count);
