@@ -88,7 +88,7 @@ function setShowTopicUnit($objectListCourses,$sesskey,$topic)
     _wait(1000);
   for ($i = 0; $i < $objectListCourses.length; $i++)
   {
-    _navigateTo('http://ava.brazcubas.br/course/view.php?id='+$objectListCourses[$i].ava+'&sesskey='+$sesskey+'&show='+$count);
+    _navigateTo('http://ava.brazcubas.br/course/view.php?id='+$objectListCourses[$i].ava+'&sesskey='+$sesskey+'&show='+$topic);
     _wait(2500);
   }
 }
